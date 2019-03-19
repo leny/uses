@@ -12,6 +12,8 @@ import {Helmet} from "react-helmet";
 import "../core/font-awesome";
 import GlobalStyles from "../components/head/global-styles";
 
+import Planets from "../components/commons/planets";
+
 const styles = {wrapper: {}};
 
 export default () => (
@@ -20,6 +22,6 @@ export default () => (
             <title>{"leny/uses"}</title>
         </Helmet>
         <GlobalStyles />
-        <p>{"Hello!"}</p>
+        <Planets />
     </div>
 );
