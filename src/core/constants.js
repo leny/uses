@@ -13,7 +13,7 @@ export const MAIN_COLOR = "#000";
 export const ALT_COLOR = "mediumblue";
 export const ALT_HOVER_COLOR = "dodgerblue";
 
-export const PLANETS_COLORS = [["#333", "#999"], ["#999", "#333"]];
+export const PLANETS_COLORS = [["#333333", "#999999"], ["#999999", "#333333"]];
 
 export const SOURCE_SANS_PRO_STACK = `"Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif`;
 

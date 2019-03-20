@@ -9,6 +9,7 @@
 import React, {useRef, useEffect, useState} from "react";
 
 import {PLANETS_COLORS} from "../../core/constants";
+import getColorState from "colortransition";
 
 export default ({
     animate = true,
@@ -18,6 +19,9 @@ export default ({
     const canvas = useRef(null);
     const planets = useRef([]);
     const colors = useRef({bg: bgColor, fg: fgColor});
+    const animated = useRef(animate);
+    const transition = useRef(false);
+    const transitionStep = useRef(0);
     const [ctx, setCtx] = useState(null);
     const [size, setSize] = useState(null);
     const [ready, setReady] = useState(false);
@@ -89,7 +93,7 @@ export default ({
         });
 
     const update = () => {
-        if (!animate) {
+        if (!animated.current) {
             return;
         }
         ctx.fillStyle = colors.current.bg;
@@ -124,6 +128,25 @@ export default ({
             },
         );
         draw();
+        if (transition.current) {
+            transitionStep.current += 1;
+            if (transitionStep.current <= 100) {
+                colors.current = {
+                    bg: getColorState(
+                        colors.current.bg,
+                        transition.current.bg,
+                        transitionStep.current,
+                    ),
+                    fg: getColorState(
+                        colors.current.fg,
+                        transition.current.fg,
+                        transitionStep.current,
+                    ),
+                };
+            } else {
+                transition.current = false;
+            }
+        }
         window.requestAnimationFrame(update);
     };
 
@@ -147,7 +170,7 @@ export default ({
             setReady(true);
         } else {
             draw();
-            animate && update();
+            animated.current && update();
         }
     }, [ready]);
 
@@ -156,11 +179,28 @@ export default ({
             `useEffect(ready: ${ready}, bgColor: ${bgColor}, fgColor: ${fgColor})`,
         );
         if (ready) {
-            colors.current = {bg: bgColor, fg: fgColor};
+            if (animated.current) {
+                transition.current = {bg: bgColor, fg: fgColor};
+                transitionStep.current = 0;
+            } else {
+                colors.current = {bg: bgColor, fg: fgColor};
+                ctx.fillStyle = bgColor;
+                ctx.fillRect(0, 0, size.w, size.h);
+                draw();
+            }
         }
     }, [bgColor, fgColor]);
 
-    console.warn(`Planets(bgColor: ${bgColor}, fgColor: ${fgColor})`);
+    useEffect(() => {
+        console.warn(`useEffect(animate: ${animate})`);
+        if (ready) {
+            (animated.current = animate) && update();
+        }
+    }, [animate]);
+
+    console.warn(
+        `Planets(animate: ${animate}, bgColor: ${bgColor}, fgColor: ${fgColor})`,
+    );
 
     return <canvas width={"1920"} height={"1080"} ref={canvas} />;
 };

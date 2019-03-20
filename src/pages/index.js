@@ -19,6 +19,7 @@ const styles = {wrapper: {}};
 
 export default () => {
     const [index, setIndex] = useState(0);
+    const [animate, setAnimate] = useState(true);
 
     return (
         <div css={styles.wrapper}>
@@ -26,11 +27,14 @@ export default () => {
                 <title>{"leny/uses"}</title>
             </Helmet>
             <GlobalStyles />
+            <button type={"button"} onClick={() => setAnimate(!animate)}>
+                {"Animate"}
+            </button>
             <button type={"button"} onClick={() => setIndex(index ? 0 : 1)}>
                 {"Change"}
             </button>
             <Planets
-                animate
+                animate={animate}
                 bgColor={PLANETS_COLORS[index][0]}
                 fgColor={PLANETS_COLORS[index][1]}
             />
