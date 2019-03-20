@@ -151,7 +151,6 @@ export default ({
     };
 
     useEffect(() => {
-        console.warn(`useEffect(ready: ${ready}, animate: ${animate})`);
         if (!ready) {
             let w, h, context;
 
@@ -175,9 +174,6 @@ export default ({
     }, [ready]);
 
     useEffect(() => {
-        console.warn(
-            `useEffect(ready: ${ready}, bgColor: ${bgColor}, fgColor: ${fgColor})`,
-        );
         if (ready) {
             if (animated.current) {
                 transition.current = {bg: bgColor, fg: fgColor};
@@ -192,15 +188,10 @@ export default ({
     }, [bgColor, fgColor]);
 
     useEffect(() => {
-        console.warn(`useEffect(animate: ${animate})`);
         if (ready) {
             (animated.current = animate) && update();
         }
     }, [animate]);
-
-    console.warn(
-        `Planets(animate: ${animate}, bgColor: ${bgColor}, fgColor: ${fgColor})`,
-    );
 
     return <canvas width={"1920"} height={"1080"} ref={canvas} />;
 };
