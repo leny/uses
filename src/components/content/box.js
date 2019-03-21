@@ -16,16 +16,22 @@ import {BCG_COLOR} from "../../core/constants";
 const styles = {
     container: css({
         background: BCG_COLOR,
-        padding: [rem(1), rem(2), 0],
+        padding: [rem(1), rem(2)],
     }),
     title: css({}),
     icon: css({}),
 };
 
-export default ({className, title = "No title"}) => {
+export default ({className, title}) => {
+    let $title;
+
+    if (title) {
+        $title = <h2 css={styles.title}>{title}</h2>;
+    }
+
     return (
-        <section css={styles.container} className={className}>
-            <h2 css={styles.title}>{title}</h2>
+        <div css={styles.container} className={className}>
+            {$title}
             <p>
                 {
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vel tempor nulla. Proin vitae condimentum neque. Nullam lobortis in tellus quis commodo. Nullam aliquam ligula eu neque volutpat elementum. Aliquam erat volutpat. Proin sed porttitor sapien, at porta nisi. Aenean eleifend vel lectus at lobortis. Duis non libero non lorem viverra accumsan. Nam ac risus eu sem rhoncus iaculis sit amet eu nisl. Nulla eros risus, egestas in tristique vel, luctus vitae libero. Pellentesque convallis risus sit amet sem rutrum laoreet."
@@ -41,6 +47,6 @@ export default ({className, title = "No title"}) => {
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vel tempor nulla. Proin vitae condimentum neque. Nullam lobortis in tellus quis commodo. Nullam aliquam ligula eu neque volutpat elementum. Aliquam erat volutpat. Proin sed porttitor sapien, at porta nisi. Aenean eleifend vel lectus at lobortis. Duis non libero non lorem viverra accumsan. Nam ac risus eu sem rhoncus iaculis sit amet eu nisl. Nulla eros risus, egestas in tristique vel, luctus vitae libero. Pellentesque convallis risus sit amet sem rutrum laoreet."
                 }
             </p>
-        </section>
+        </div>
     );
 };

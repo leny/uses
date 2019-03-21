@@ -10,6 +10,13 @@ import React, {useRef, useEffect, useState} from "react";
 
 import {PLANETS_COLORS} from "../../core/constants";
 import getColorState from "colortransition";
+import {css} from "@pwops/emotion-css";
+
+const styles = {
+    container: css({
+        background: PLANETS_COLORS[0][0],
+    }),
+};
 
 export default ({
     className,
@@ -196,9 +203,10 @@ export default ({
 
     return (
         <canvas
+            css={styles.container}
             className={className}
-            width={"1920"}
-            height={"1080"}
+            width={window.innerWidth || 1000}
+            height={window.innerHeight || 750}
             ref={canvas}
         />
     );

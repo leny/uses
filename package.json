@@ -34,7 +34,8 @@
     "gatsby-plugin-prefetch-google-fonts": "^1.4.0",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
-    "react-helmet": "^5.2.0"
+    "react-helmet": "^5.2.0",
+    "react-intersection-visible-hook": "^1.4.2"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",

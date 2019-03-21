@@ -9,28 +9,38 @@
 import React from "react";
 
 import {css} from "@pwops/emotion-css";
-import {rem} from "@pwops/core";
+import {rem, percent, linearGradient, rgba} from "@pwops/core";
+import {mq} from "../../core/utils";
 
-import {BCG_COLOR} from "../../core/constants";
+import {BCG_COLOR, MQ_SMALL_DESKTOP} from "../../core/constants";
 
 import Title from "../svg/title";
 
 const styles = {
     container: css({
-        flexColumn: ["flex-end", "flex-start"],
+        flexRow: ["flex-start", "center"],
         background: BCG_COLOR,
-        padding: [rem(1), rem(2), 0],
+        padding: [0, rem(2)],
+        position: "relative",
+        "&::after": {
+            content: `""`,
+            absolute: [percent(100), 0, 0, 0],
+            height: rem(2),
+            background: linearGradient(rgba(0, 0, 0, 0.5), "transparent"),
+        },
     }),
-    title: css({}),
     icon: css({
-        height: rem(5),
+        height: rem(2.5),
+        ...mq(MQ_SMALL_DESKTOP, {
+            height: rem(3.6),
+        }),
     }),
 };
 
 export default ({className}) => {
     return (
         <header css={styles.container} className={className}>
-            <h1 css={styles.title}>
+            <h1>
                 <Title css={styles.icon} title={"leny/uses"} />
             </h1>
         </header>
