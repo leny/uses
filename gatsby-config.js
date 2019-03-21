@@ -9,8 +9,14 @@
 module.exports = {
     plugins: [
         {
-            resolve: `gatsby-plugin-emotion`,
+            resolve: `gatsby-source-filesystem`,
+            options: {
+                path: `${__dirname}/data`,
+                name: "markdown-pages",
+            },
         },
+        `gatsby-transformer-remark`,
+        `gatsby-plugin-emotion`,
         {
             resolve: `gatsby-plugin-prefetch-google-fonts`,
             options: {
