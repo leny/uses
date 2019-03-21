@@ -12,6 +12,7 @@ import {PLANETS_COLORS} from "../../core/constants";
 import getColorState from "colortransition";
 
 export default ({
+    className,
     animate = true,
     bgColor = PLANETS_COLORS[0][0],
     fgColor = PLANETS_COLORS[0][1],
@@ -193,5 +194,12 @@ export default ({
         }
     }, [animate]);
 
-    return <canvas width={"1920"} height={"1080"} ref={canvas} />;
+    return (
+        <canvas
+            className={className}
+            width={"1920"}
+            height={"1080"}
+            ref={canvas}
+        />
+    );
 };

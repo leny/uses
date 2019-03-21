@@ -25,6 +25,7 @@
     "@pwops/core": "0.0.2",
     "@pwops/emotion-css": "0.0.4",
     "@pwops/mixins": "0.0.2",
+    "classnames": "^2.2.6",
     "colortransition": "^1.0.2",
     "emotion-box-sizing-reset": "^0.1.1",
     "emotion-normalize": "^10.0.0",
