@@ -28,6 +28,7 @@ export default ({
     const planets = useRef([]);
     const colors = useRef({bg: bgColor, fg: fgColor});
     const animated = useRef(animate);
+    const fpsLock = useRef(false);
     const transition = useRef(false);
     const transitionStep = useRef(0);
     const [ctx, setCtx] = useState(null);
@@ -104,6 +105,12 @@ export default ({
         if (!animated.current) {
             return;
         }
+        if (fpsLock.current) {
+            fpsLock.current = !fpsLock.current;
+            window.requestAnimationFrame(update);
+            return;
+        }
+        fpsLock.current = !fpsLock.current;
         ctx.fillStyle = colors.current.bg;
         ctx.fillRect(0, 0, size.w, size.h);
         planets.current = planets.current.map(
@@ -122,12 +129,12 @@ export default ({
                             position.x +
                             Math.sin(direction) /
                                 Math.ceil(Math.random() * radius * 2) /
-                                2.5,
+                                2,
                         y:
                             position.y +
                             Math.cos(direction) /
                                 Math.ceil(Math.random() * radius * 2) /
-                                2.5,
+                                2,
                     },
                     direction: change
                         ? Math.random() * (Math.PI * 2)
