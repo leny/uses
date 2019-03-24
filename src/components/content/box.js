@@ -9,44 +9,78 @@
 import React from "react";
 
 import {css} from "@pwops/emotion-css";
-import {rem} from "@pwops/core";
+import {rem, important, rgba, percent, translateX} from "@pwops/core";
 
-import {BCG_COLOR} from "../../core/constants";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {
+    BCG_COLOR,
+    ALT_COLOR,
+    ALT_HOVER_COLOR,
+    MQ_SMALL_DESKTOP,
+} from "../../core/constants";
+import {mq} from "../../core/utils";
 
 const styles = {
     container: css({
+        position: "relative",
         background: BCG_COLOR,
         padding: [rem(1), rem(2)],
     }),
-    title: css({}),
-    icon: css({}),
+    content: css({
+        position: "relative",
+        zIndex: 200,
+    }),
+    title: css({
+        margin: [rem(4.8), "auto", rem(1.6)],
+        fontSize: rem(2.4),
+        ...mq(MQ_SMALL_DESKTOP, {
+            marginTop: rem(6.4),
+        }),
+    }),
+    icon: css({
+        absolute: [rem(1.6), "auto", 0, percent(50)],
+        display: "block",
+        margin: [0, "auto", rem(2)],
+        size: important(rem(7.2)),
+        color: rgba(0, 0, 0, 0.15),
+        transform: translateX(percent(-50)),
+        ...mq(MQ_SMALL_DESKTOP, {
+            size: important(rem(12)),
+        }),
+    }),
+    text: css({
+        fontSize: rem(1.6),
+        a: {
+            color: ALT_COLOR,
+            textDecoration: "none",
+            cursor: "pointer",
+            transition: ["color", ".25s", "ease-in-out"],
+            "&:hover": {color: ALT_HOVER_COLOR},
+        },
+    }),
 };
 
-export default ({className, title}) => {
-    let $title;
+export default ({className, frontmatter: {icon, title} = {}, html}) => {
+    let $title, $icon;
 
     if (title) {
         $title = <h2 css={styles.title}>{title}</h2>;
     }
 
+    if (icon) {
+        $icon = <FontAwesomeIcon css={styles.icon} icon={icon} />;
+    }
+
     return (
         <div css={styles.container} className={className}>
-            {$title}
-            <p>
-                {
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vel tempor nulla. Proin vitae condimentum neque. Nullam lobortis in tellus quis commodo. Nullam aliquam ligula eu neque volutpat elementum. Aliquam erat volutpat. Proin sed porttitor sapien, at porta nisi. Aenean eleifend vel lectus at lobortis. Duis non libero non lorem viverra accumsan. Nam ac risus eu sem rhoncus iaculis sit amet eu nisl. Nulla eros risus, egestas in tristique vel, luctus vitae libero. Pellentesque convallis risus sit amet sem rutrum laoreet."
-                }
-            </p>
-            <p>
-                {
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vel tempor nulla. Proin vitae condimentum neque. Nullam lobortis in tellus quis commodo. Nullam aliquam ligula eu neque volutpat elementum. Aliquam erat volutpat. Proin sed porttitor sapien, at porta nisi. Aenean eleifend vel lectus at lobortis. Duis non libero non lorem viverra accumsan. Nam ac risus eu sem rhoncus iaculis sit amet eu nisl. Nulla eros risus, egestas in tristique vel, luctus vitae libero. Pellentesque convallis risus sit amet sem rutrum laoreet."
-                }
-            </p>
-            <p>
-                {
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vel tempor nulla. Proin vitae condimentum neque. Nullam lobortis in tellus quis commodo. Nullam aliquam ligula eu neque volutpat elementum. Aliquam erat volutpat. Proin sed porttitor sapien, at porta nisi. Aenean eleifend vel lectus at lobortis. Duis non libero non lorem viverra accumsan. Nam ac risus eu sem rhoncus iaculis sit amet eu nisl. Nulla eros risus, egestas in tristique vel, luctus vitae libero. Pellentesque convallis risus sit amet sem rutrum laoreet."
-                }
-            </p>
+            {$icon}
+            <div css={styles.content}>
+                {$title}
+                <div
+                    css={styles.text}
+                    dangerouslySetInnerHTML={{__html: html}}
+                />
+            </div>
         </div>
     );
 };

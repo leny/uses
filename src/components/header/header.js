@@ -30,7 +30,7 @@ const styles = {
         },
     }),
     icon: css({
-        height: rem(2.5),
+        height: rem(3.2),
         ...mq(MQ_SMALL_DESKTOP, {
             height: rem(3.6),
         }),

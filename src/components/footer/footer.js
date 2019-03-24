@@ -12,7 +12,7 @@ import {css} from "@pwops/emotion-css";
 import {rem, linearGradient, rgba, important} from "@pwops/core";
 import {mq} from "../../core/utils";
 
-import {NBSP, BCG_COLOR, ALT_COLOR, MQ_TABLET} from "../../core/constants";
+import {BCG_COLOR, ALT_COLOR, MQ_TABLET} from "../../core/constants";
 
 import Link from "../commons/link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -75,11 +75,6 @@ export default ({className}) => {
         <footer css={styles.container} className={className}>
             <p css={styles.name}>
                 <Link href={"//leny.me"}>{"2019, leny.me"}</Link>
-                {NBSP}
-                {"(source code on"}
-                {NBSP}
-                <Link href={"//github.com/leny/uses"}>{"leny/use"}</Link>
-                {")"}
             </p>
             <nav css={styles.socials}>
                 {LINKS.map(({url, title, icon}) => (

@@ -7,6 +7,7 @@
  */
 
 import React, {useState} from "react";
+import {graphql, useStaticQuery} from "gatsby";
 
 import {Helmet} from "react-helmet";
 import "../core/font-awesome";
@@ -22,6 +23,15 @@ import ContentSection from "../components/content/section";
 import ContentBox from "../components/content/box";
 
 import {BCG_COLOR, MQ_TABLET, PLANETS_COLORS} from "../core/constants";
+
+const SECTIONS = [
+    {position: "left", index: 0, id: "devtools"},
+    {position: "right", index: 1, id: "apps"},
+    {position: "left", index: 2, id: "hardware"},
+    {position: "right", index: 3, id: "mobile"},
+    {position: "left", index: 4, id: "desk"},
+    {position: "right", index: 0, id: "gear"},
+];
 
 const styles = {
     wrapper: css({position: "relative"}),
@@ -53,6 +63,25 @@ const styles = {
 };
 
 export default () => {
+    const {
+        allMarkdownRemark: {edges},
+    } = useStaticQuery(graphql`
+        query {
+            allMarkdownRemark {
+                edges {
+                    node {
+                        frontmatter {
+                            icon
+                            title
+                            section
+                        }
+                        html
+                    }
+                }
+            }
+        }
+    `);
+
     const [colors, setColors] = useState({
         bgColor: PLANETS_COLORS[0][0],
         fgColor: PLANETS_COLORS[0][1],
@@ -65,13 +94,22 @@ export default () => {
             fgColor: PLANETS_COLORS[index][1],
         });
 
+    const getNode = id =>
+        edges.find(
+            ({
+                node: {
+                    frontmatter: {section},
+                },
+            }) => section === id,
+        ).node;
+
     return (
         <div css={styles.wrapper}>
             <Helmet>
                 <title>{"leny/uses"}</title>
             </Helmet>
             <GlobalStyles />
-            <ContentBox css={styles.boxIntro} />
+            <ContentBox css={styles.boxIntro} html={getNode("intro").html} />
             <Header css={styles.header} />
             <Planets
                 css={styles.planets}
@@ -79,45 +117,15 @@ export default () => {
                 {...colors}
             />
             <div css={styles.content}>
-                <ContentSection
-                    position={"left"}
-                    index={0}
-                    onVisibilityChange={onVisibilityChange}>
-                    <ContentBox
-                        title={"Editor & Terminal / Dev Tools"}
-                        icon={"code"}
-                    />
-                </ContentSection>
-                <ContentSection
-                    position={"right"}
-                    index={1}
-                    onVisibilityChange={onVisibilityChange}>
-                    <ContentBox title={"Apps"} icon={"rocket"} />
-                </ContentSection>
-                <ContentSection
-                    position={"left"}
-                    index={2}
-                    onVisibilityChange={onVisibilityChange}>
-                    <ContentBox title={"Hardware"} icon={"keyboard"} />
-                </ContentSection>
-                <ContentSection
-                    position={"right"}
-                    index={3}
-                    onVisibilityChange={onVisibilityChange}>
-                    <ContentBox title={"Mobile"} icon={"mobile-alt"} />
-                </ContentSection>
-                <ContentSection
-                    position={"left"}
-                    index={4}
-                    onVisibilityChange={onVisibilityChange}>
-                    <ContentBox title={"Desk"} icon={"chair-office"} />
-                </ContentSection>
-                <ContentSection
-                    position={"right"}
-                    index={0}
-                    onVisibilityChange={onVisibilityChange}>
-                    <ContentBox title={"Gear"} icon={"backpack"} />
-                </ContentSection>
+                {SECTIONS.map(({position, index, id}) => (
+                    <ContentSection
+                        key={id}
+                        position={position}
+                        index={index}
+                        onVisibilityChange={onVisibilityChange}>
+                        <ContentBox {...getNode(id)} />
+                    </ContentSection>
+                ))}
             </div>
             <Footer />
         </div>
