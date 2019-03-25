@@ -7,6 +7,7 @@
  */
 
 module.exports = {
+    pathPrefix: "/uses",
     plugins: [
         {
             resolve: `gatsby-source-filesystem`,
