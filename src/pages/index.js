@@ -113,8 +113,8 @@ export default () => {
             <Planets
                 css={styles.planets}
                 animate={
-                    window &&
-                    document &&
+                    typeof window !== "undefined" &&
+                    typeof document !== "undefined" &&
                     window.innerWidth >= 960 &&
                     document.location.hash !== "#static"
                 }
