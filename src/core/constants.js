@@ -14,11 +14,11 @@ export const ALT_COLOR = "mediumblue";
 export const ALT_HOVER_COLOR = "dodgerblue";
 
 export const PLANETS_COLORS = [
-    ["#173F5F", "#3CAEA3"],
-    ["#20639B", "#3CAEA3"],
-    ["#3CAEA3", "#173F5F"],
-    ["#F6D55C", "#173F5F"],
-    ["#ED553B", "#F6D55C"],
+    ["#293132", "#4F5165"],
+    ["#474044", "#547AA5"],
+    ["#4F5165", "#50D8D7"],
+    ["#293132", "#547AA5"],
+    ["#474044", "#4F5165"],
 ];
 
 export const SOURCE_SANS_PRO_STACK = `"Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif`;

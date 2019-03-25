@@ -29,8 +29,7 @@ const SECTIONS = [
     {position: "right", index: 1, id: "apps"},
     {position: "left", index: 2, id: "hardware"},
     {position: "right", index: 3, id: "mobile"},
-    {position: "left", index: 4, id: "desk"},
-    {position: "right", index: 0, id: "gear"},
+    {position: "left", index: 4, id: "gear"},
 ];
 
 const styles = {
@@ -113,7 +112,10 @@ export default () => {
             <Header css={styles.header} />
             <Planets
                 css={styles.planets}
-                animate={window.innerWidth >= 960}
+                animate={
+                    window.innerWidth >= 960 &&
+                    document.location.hash !== "#static"
+                }
                 {...colors}
             />
             <div css={styles.content}>
