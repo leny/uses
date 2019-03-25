@@ -11,6 +11,7 @@ import React, {useRef, useEffect, useState} from "react";
 import {PLANETS_COLORS} from "../../core/constants";
 import getColorState from "colortransition";
 import {css} from "@pwops/emotion-css";
+import {guardedWindow} from "../../core/utils";
 
 const styles = {
     container: css({
@@ -107,7 +108,7 @@ export default ({
         }
         if (fpsLock.current) {
             fpsLock.current = !fpsLock.current;
-            window.requestAnimationFrame(update);
+            guardedWindow().requestAnimationFrame(update);
             return;
         }
         fpsLock.current = !fpsLock.current;
@@ -162,7 +163,7 @@ export default ({
                 transition.current = false;
             }
         }
-        window.requestAnimationFrame(update);
+        guardedWindow().requestAnimationFrame(update);
     };
 
     useEffect(() => {
@@ -212,8 +213,8 @@ export default ({
         <canvas
             css={styles.container}
             className={className}
-            width={window.innerWidth || 1000}
-            height={window.innerHeight || 750}
+            width={guardedWindow().innerWidth || 1000}
+            height={guardedWindow().innerHeight || 750}
             ref={canvas}
         />
     );

@@ -23,6 +23,7 @@ import ContentSection from "../components/content/section";
 import ContentBox from "../components/content/box";
 
 import {BCG_COLOR, MQ_TABLET, PLANETS_COLORS} from "../core/constants";
+import {guardedWindow, guardedDocument} from "../core/utils";
 
 const SECTIONS = [
     {position: "left", index: 0, id: "devtools"},
@@ -113,10 +114,8 @@ export default () => {
             <Planets
                 css={styles.planets}
                 animate={
-                    typeof window !== "undefined" &&
-                    typeof document !== "undefined" &&
-                    window.innerWidth >= 960 &&
-                    document.location.hash !== "#static"
+                    guardedWindow().innerWidth >= 960 &&
+                    guardedDocument().location.hash !== "#static"
                 }
                 {...colors}
             />
