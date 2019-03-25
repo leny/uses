@@ -44,7 +44,7 @@ const styles = {
         ...mq(MQ_SMALL_DESKTOP, {
             size: important(rem(25)),
             color: rgba(0, 0, 0, 0.05),
-            bottom: 0,
+            bottom: rem(1),
         }),
     }),
     text: css({

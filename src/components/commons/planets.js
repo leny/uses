@@ -11,7 +11,6 @@ import React, {useRef, useEffect, useState} from "react";
 import {PLANETS_COLORS} from "../../core/constants";
 import getColorState from "colortransition";
 import {css} from "@pwops/emotion-css";
-import {guardedWindow} from "../../core/utils";
 
 const styles = {
     container: css({
@@ -25,6 +24,7 @@ export default ({
     bgColor = PLANETS_COLORS[0][0],
     fgColor = PLANETS_COLORS[0][1],
 }) => {
+    const [canvasSize, setCanvasSize] = useState({width: null, height: null});
     const canvas = useRef(null);
     const planets = useRef([]);
     const colors = useRef({bg: bgColor, fg: fgColor});
@@ -108,7 +108,7 @@ export default ({
         }
         if (fpsLock.current) {
             fpsLock.current = !fpsLock.current;
-            guardedWindow().requestAnimationFrame(update);
+            window.requestAnimationFrame(update);
             return;
         }
         fpsLock.current = !fpsLock.current;
@@ -163,15 +163,20 @@ export default ({
                 transition.current = false;
             }
         }
-        guardedWindow().requestAnimationFrame(update);
+        window.requestAnimationFrame(update);
     };
 
     useEffect(() => {
         if (!ready) {
             let w, h, context;
 
-            w = canvas.current.width;
-            h = canvas.current.height;
+            setCanvasSize({
+                width: window.innerWidth,
+                height: window.innerHeight,
+            });
+
+            w = window.innerWidth;
+            h = window.innerHeight;
             context = canvas.current.getContext("2d");
 
             setSize({w, h});
@@ -213,8 +218,8 @@ export default ({
         <canvas
             css={styles.container}
             className={className}
-            width={guardedWindow().innerWidth || 1000}
-            height={guardedWindow().innerHeight || 750}
+            width={canvasSize.width || 1000}
+            height={canvasSize.height || 750}
             ref={canvas}
         />
     );

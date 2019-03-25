@@ -9,11 +9,3 @@
 export const mq = (query, props = {}) => ({
     [`@media(${query})`]: props,
 });
-
-export const guardedWindow = () => {
-    return typeof window !== "undefined" ? window : {};
-};
-
-export const guardedDocument = () => {
-    return typeof document !== "undefined" ? document : {};
-};

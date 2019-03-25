@@ -6,7 +6,7 @@
  * started at 19/03/2019
  */
 
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {graphql, useStaticQuery} from "gatsby";
 
 import {Helmet} from "react-helmet";
@@ -23,7 +23,6 @@ import ContentSection from "../components/content/section";
 import ContentBox from "../components/content/box";
 
 import {BCG_COLOR, MQ_TABLET, PLANETS_COLORS} from "../core/constants";
-import {guardedWindow, guardedDocument} from "../core/utils";
 
 const SECTIONS = [
     {position: "left", index: 0, id: "devtools"},
@@ -63,6 +62,8 @@ const styles = {
 };
 
 export default () => {
+    const [animate, setAnimate] = useState(false);
+
     const {
         allMarkdownRemark: {edges},
     } = useStaticQuery(graphql`
@@ -103,6 +104,15 @@ export default () => {
             }) => section === id,
         ).node;
 
+    useEffect(
+        () =>
+            setAnimate(
+                window.innerWidth >= 960 &&
+                    document.location.hash !== "#static",
+            ),
+        [],
+    );
+
     return (
         <div css={styles.wrapper}>
             <Helmet>
@@ -111,14 +121,7 @@ export default () => {
             <GlobalStyles />
             <ContentBox css={styles.boxIntro} html={getNode("intro").html} />
             <Header css={styles.header} />
-            <Planets
-                css={styles.planets}
-                animate={
-                    guardedWindow().innerWidth >= 960 &&
-                    guardedDocument().location.hash !== "#static"
-                }
-                {...colors}
-            />
+            <Planets css={styles.planets} animate={animate} {...colors} />
             <div css={styles.content}>
                 {SECTIONS.map(({position, index, id}) => (
                     <ContentSection

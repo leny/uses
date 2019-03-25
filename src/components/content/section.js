@@ -8,7 +8,7 @@
 
 import React, {useRef, useEffect} from "react";
 
-import useVisibility from "react-intersection-visible-hook";
+import rawUseVisibility from "react-intersection-visible-hook";
 
 import {css} from "@pwops/emotion-css";
 import {vw, vh, rem} from "@pwops/core";
@@ -19,6 +19,9 @@ import {
     MQ_SMALL_DESKTOP,
     MQ_MEDIUM_DESKTOP,
 } from "../../core/constants";
+
+const useVisibility =
+    typeof window !== "undefined" ? rawUseVisibility : () => ({});
 
 export default ({className, children, position, index, onVisibilityChange}) => {
     const sectionRef = useRef(null);
