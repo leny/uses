@@ -12,7 +12,7 @@ exports.onCreateWebpackConfig = ({stage, loaders, actions}) => {
             module: {
                 rules: [
                     {
-                        test: /intersection-observer/,
+                        test: /react-intersection-visible-hook/,
                         use: loaders.null(),
                     },
                 ],
